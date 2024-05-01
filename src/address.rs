@@ -1,6 +1,6 @@
 use bitcoin::{
     blockdata::script::Script,
-    network::Network,
+    Network,
     address::Address,
     // hash160::Hash
 };

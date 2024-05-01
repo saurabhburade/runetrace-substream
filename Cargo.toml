@@ -18,9 +18,14 @@ substreams = "0.5"
 substreams-ethereum = "0.9"
 substreams-database-change = "1"
 hex = "0.4.3"
-bitcoin = "0.31.0"
+
+
+bitcoin = { version = "0.30.1", features = ["rand"] }
+
 anyhow = "1"
 http = "1.0.0"
+substreams-bitcoin = "1.0.0"
+ordinals = "0.0.8"
 
 # Required so that ethabi > ethereum-types build correctly under wasm32-unknown-unknown
 [target.wasm32-unknown-unknown.dependencies]

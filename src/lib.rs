@@ -2,6 +2,8 @@ mod ord;
 mod pb;
 mod address;
 mod sats_utils;
+mod map_transactions;
+mod map_runes;
 
 use bitcoin::{consensus::deserialize, hashes::hex::FromHex, Transaction};
 use ord::envelope::ParsedEnvelope;

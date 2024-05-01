@@ -9,6 +9,8 @@ imports:
 protobuf:
   files:
     - ordinals.proto
+    - transaction_meta.proto
+    - runes_meta.proto
   importPaths:
     - ./proto
 
@@ -42,3 +44,19 @@ modules:
       - source: sf.bitcoin.type.v1.Block
     output:
       type: proto:ordinals.v1.Block
+
+  - name: map_transactions
+    kind: map
+    initialBlock: 0
+    inputs:
+      - source: sf.bitcoin.type.v1.Block
+    output:
+      type: proto:btc.transaction_meta.v1.Transactions
+
+  - name: map_runes
+    kind: map
+    initialBlock: 0
+    inputs:
+      - source: sf.bitcoin.type.v1.Block
+    output:
+      type: proto:btc.runes_meta.v1.Rune
