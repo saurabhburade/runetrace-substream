@@ -4,6 +4,147 @@ package btc.runes_meta.v1;
 
 // Represents a continuous block of ordinals assigned to a given UTXO
 message Rune {
-    string name = 1;
-    string symbol = 2;
+  string name = 1;
+  string symbol = 2;
 }
+
+// message RunestoneBuf {
+//   repeated Edict edicts = 1;
+//   Etching etching = 2;
+//   string mint = 3;
+//   string pointer = 4;
+// }
+
+// message Etching {
+// ------ETCHING------
+// Name :: etching.rune
+// symbol :: etching.symbol
+// spacers :: etching.spacers
+// divisibility :: etching.divisibility
+// premine :: etching.premine
+// supply :: etching.premine
+// cap :: etching.terms.cap
+// amount :: etching.terms.amount
+// ------EDICTS------
+// id:: for Edict { id, amount, output } in runestone.edicts.iter().copied()
+// amount:: for Edict { id, amount, output } in runestone.edicts.iter().copied()
+// output:: for Edict { id, amount, output } in runestone.edicts.iter().copied()
+// ------MINT------
+// ------POINTER------
+//   // The following fields are marked as optional in Rust
+//   // They are represented as a oneof in protobuf
+
+//   optional int32 divisibility = 1;
+
+//   optional string premine = 2;
+
+//   optional RuneBuf rune = 3;
+
+//   optional string spacers = 4;
+
+//   optional string symbol = 5;
+
+//   optional Terms terms = 6;
+
+//   bool turbo = 7;
+// }
+
+// message Terms {
+//   // Define the fields of the Terms struct here
+//   // Example:
+//   string cap = 1;
+//   string amount = 2;
+// }
+
+// message RuneId {
+//   string block = 1;
+//   string tx = 2;
+// }
+// message Edict {
+//   RuneId id = 1;
+//   string amount = 2;
+//   string output = 3;
+// }
+// message Cenotaph {
+//   Rune etching = 1;
+//   Flaw flaw = 2;
+//   RuneId mint = 3;
+// }
+// enum Flaw {
+//   EDICT_OUTPUT = 0;
+//   EDICT_RUNE_ID = 1;
+//   INVALID_SCRIPT = 2;
+//   OPCODE = 3;
+//   SUPPLY_OVERFLOW = 4;
+//   TRAILING_INTEGERS = 5;
+//   TRUNCATED_FIELD = 6;
+//   UNRECOGNIZED_EVEN_TAG = 7;
+//   UNRECOGNIZED_FLAG = 8;
+//   VARINT = 9;
+// }
+// message RuneBuf {
+//   uint64 value = 1;
+// }
+
+// message RunestoneBuf {
+//   repeated Edict edicts = 1;
+//   Etching etching = 2;
+//   string mint = 3;
+//   string pointer = 4;
+// }
+
+// message Etching {
+//   // The following fields are marked as optional in Rust
+//   // They are represented as a oneof in protobuf
+
+//   optional int32 divisibility = 1;
+
+//   optional string premine = 2;
+
+//   optional RuneBuf rune = 3;
+
+//   optional string spacers = 4;
+
+//   optional string symbol = 5;
+
+//   optional Terms terms = 6;
+
+//   bool turbo = 7;
+// }
+
+// message Terms {
+//   // Define the fields of the Terms struct here
+//   // Example:
+//   string cap = 1;
+//   string amount = 2;
+// }
+
+// message RuneId {
+//   string block = 1;
+//   string tx = 2;
+// }
+// message Edict {
+//   RuneId id = 1;
+//   string amount = 2;
+//   string output = 3;
+// }
+// message Cenotaph {
+//   Rune etching = 1;
+//   Flaw flaw = 2;
+//   RuneId mint = 3;
+// }
+// enum Flaw {
+//   EDICT_OUTPUT = 0;
+//   EDICT_RUNE_ID = 1;
+//   INVALID_SCRIPT = 2;
+//   OPCODE = 3;
+//   SUPPLY_OVERFLOW = 4;
+//   TRAILING_INTEGERS = 5;
+//   TRUNCATED_FIELD = 6;
+//   UNRECOGNIZED_EVEN_TAG = 7;
+//   UNRECOGNIZED_FLAG = 8;
+//   VARINT = 9;
+// }
+// message RuneBuf {
+//   uint64 value = 1;
+// }
