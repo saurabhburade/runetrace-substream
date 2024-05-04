@@ -108,8 +108,10 @@ pub struct Transaction {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Block {
+    #[prost(message, repeated, tag="1")]
+    pub runestones: ::prost::alloc::vec::Vec<RunestoneBuf>,
     /// Block timestamp
-    #[prost(uint64, tag="1")]
+    #[prost(uint64, tag="9")]
     pub timestamp: u64,
     /// Block number
     #[prost(uint64, tag="2")]
@@ -130,8 +132,6 @@ pub struct Block {
     pub miner_address: ::prost::alloc::string::String,
     #[prost(uint64, tag="8")]
     pub total_runes_tx: u64,
-    #[prost(message, repeated, tag="9")]
-    pub runestones: ::prost::alloc::vec::Vec<RunestoneBuf>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

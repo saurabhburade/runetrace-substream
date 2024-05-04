@@ -74,8 +74,10 @@ message Transaction {
 }
 
 message Block {
+  repeated RunestoneBuf runestones = 1;
+
   // Block timestamp
-  uint64 timestamp = 1;
+  uint64 timestamp = 9;
   // Block number
   uint64 number = 2;
   // Total miner reward (in sats)
@@ -88,7 +90,6 @@ message Block {
   repeated Transaction txs = 6;
   string miner_address = 7;
   uint64 total_runes_tx = 8;
-  repeated RunestoneBuf runestones = 9;
 }
 
 message Inscription {
