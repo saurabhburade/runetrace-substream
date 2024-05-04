@@ -7,14 +7,47 @@ message Rune {
   string name = 1;
   string symbol = 2;
 }
+message RunestoneBufs {
+  repeated RunestoneBuf runestoneBufs = 1;
+}
 
-// message RunestoneBuf {
-//   repeated Edict edicts = 1;
-//   Etching etching = 2;
-//   string mint = 3;
-//   string pointer = 4;
-// }
+message RunestoneBuf {
+  repeated Edict edicts = 1;
+  Etching etching = 2;
+  RuneId mint = 3;
+  string pointer = 4;
+}
+message Etching {
+  optional int32 divisibility = 1;
 
+  optional string premine = 2;
+
+  optional string rune = 3;
+
+  optional string spacers = 4;
+
+  optional string symbol = 5;
+
+  optional bool turbo = 6;
+  optional string supply = 7;
+  optional Terms terms = 8;
+  optional RuneId id = 9;
+}
+message Terms {
+  optional string cap = 1;
+  optional string amount = 2;
+}
+
+message Edict {
+  RuneId id = 1;
+  string amount = 2;
+  string output = 3;
+}
+
+message RuneId {
+  string block = 1;
+  string tx = 2;
+}
 // message Etching {
 // ------ETCHING------
 // Name :: etching.rune
