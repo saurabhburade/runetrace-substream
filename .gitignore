@@ -2,4 +2,6 @@ target/
 *.spkg
 .env
 replay.log
+/replay.log
 ./replay.log
+replay.log

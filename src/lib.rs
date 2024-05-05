@@ -7,7 +7,7 @@ mod map_runes;
 
 use bitcoin::{ consensus::deserialize, hashes::hex::FromHex, Transaction };
 
-use map_runes::{map_runes2, txn_to_rune};
+use map_runes::{ map_runes2, txn_to_rune };
 use ord::envelope::ParsedEnvelope;
 use address::address_from_scriptpubkey;
 use pb::ordinals::v1::{ self as ord_proto, Inscription };
@@ -74,9 +74,9 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
         .enumerate()
         .map(|(idx, tx)| {
             // RUNES DATA
-            // let runeRaw = txn_to_rune(tx.clone(), block.clone(), idx.clone());
-            // let currentrune = runeRaw.unwrap_or_default();
-            let currentrune = Default::default();
+            let runeRaw = txn_to_rune(tx.clone(), block.height as u64, idx.clone());
+            let currentrune = runeRaw.unwrap_or_default();
+            // let currentrune = Default::default();
             // // if currentrunel
 
             // if Some(currentrune.clone()).is_some() {

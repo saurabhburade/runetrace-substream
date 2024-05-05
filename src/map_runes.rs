@@ -475,7 +475,7 @@ pub fn map_runes2(
 
 pub fn txn_to_rune(
     trans: pb::sf::bitcoin::r#type::v1::Transaction,
-    blk: pb::sf::bitcoin::r#type::v1::Block,
+    blkHeight: u64,
     index: usize
 ) -> Result<ord_proto::RunestoneBuf, Vec<substreams::errors::Error>> {
     let mut currentRune = ord_proto::RunestoneBuf::default();
@@ -545,7 +545,7 @@ pub fn txn_to_rune(
                         terms: None, // Add the missing field 'terms'
                         supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms'
                         id: Some(ord_proto::RuneId {
-                            block: blk.height.to_string(), // Unwrap the Option value
+                            block: blkHeight.to_string(), // Unwrap the Option value
                             tx: index.to_string(), // Add the missing field 'cap'
                         }),
                     });
@@ -566,7 +566,7 @@ pub fn txn_to_rune(
                             }), // Add the missing field 'terms'
                             supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms',
                             id: Some(ord_proto::RuneId {
-                                block: blk.height.to_string(), // Unwrap the Option value
+                                block: blkHeight.to_string(), // Unwrap the Option value
                                 tx: index.to_string(), // Add the missing field 'cap'
                             }),
                         });
