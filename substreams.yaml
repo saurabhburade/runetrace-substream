@@ -39,7 +39,7 @@ modules:
 
   - name: map_ordinals
     kind: map
-    initialBlock: 840000
+    initialBlock: 0
     inputs:
       - source: sf.bitcoin.type.v1.Block
     output:

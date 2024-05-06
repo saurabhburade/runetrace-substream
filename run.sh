@@ -15,10 +15,10 @@ export SUBSTREAMS_API_KEY="server_7cfdb0684c0a3757084f091e72949700"
 
 substreams gui -e mainnet.btc.streamingfast.io:443 \
    substreams.yaml \
-   map_ordinals \
+   map_runes \
    --start-block 840000 \
    --stop-block +5 \
-   --production-mode
+   # --production-mode
 
 # substreams gui -e mainnet.btc.streamingfast.io:443 \
 #    substreams.yaml \

@@ -66,7 +66,7 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
             }
         },
     };
-    // let mut all_runes: Vec<ord_proto::RunestoneBuf> = Vec::new();
+    let mut all_runes: Vec<ord_proto::RunestoneBuf> = Vec::new();
 
     // Handle non-coinbase transactions
     let mut transactions = block.tx[1..]
@@ -79,19 +79,19 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
             // let currentrune = Default::default();
             // // if currentrunel
 
-            // if Some(currentrune.clone()).is_some() {
-            // substreams::log::println("RUNE FOUND".to_string());
-            // if let Some(etching) = &currentrune.etching {
-            //     substreams::log::println(
-            //         etching.rune
-            //             .as_ref()
-            //             .map(|r| r.to_string())
-            //             .unwrap_or_default()
-            //             .to_string()
-            //     );
-            // }
-            // all_runes.push(currentrune.clone());
-            // }
+            if Some(currentrune.clone()).is_some() {
+                // substreams::log::println("RUNE FOUND".to_string());
+                // if let Some(etching) = &currentrune.etching {
+                //     substreams::log::println(
+                //         etching.rune
+                //             .as_ref()
+                //             .map(|r| r.to_string())
+                //             .unwrap_or_default()
+                //             .to_string()
+                //     );
+                // }
+                all_runes.push(currentrune.clone());
+            }
             // substreams::log::println(rune.unwrap_or_default().etching.unwrap_or_default().rune);
             ord_proto::Transaction {
                 txid: tx.txid.clone(),
@@ -128,13 +128,13 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
             }
         })
         .collect::<Vec<_>>();
-    let miner = "0".to_string();
-    // let miner = address_from_scriptpubkey(
-    //     &raw_coinbase_tx.vout[0].script_pub_key.as_ref().unwrap().hex.to_string()
-    // );
+    // let miner = "0".to_string();
+    let miner = address_from_scriptpubkey(
+        &raw_coinbase_tx.vout[0].script_pub_key.as_ref().unwrap().hex.to_string()
+    );
 
     // Block
-    let all_runes = map_runes2(block.clone()).unwrap_or_default();
+    // let all_runes = map_runes2(block.clone()).unwrap_or_default();
     let mut all_txs = vec![coinbase_tx];
     // substreams::log::println("TOTAL RUNES".to_string());
     // substreams::log::println(all_runes.len().to_string());
@@ -147,7 +147,7 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
         subsidy: block_subsidy as u64,
         fees: all_txs[0].amount - block_subsidy,
         txs: all_txs,
-        miner_address: miner,
+        miner_address: miner.unwrap_or_default(), // Unwrap the `Option<String>` value
         total_runes_tx: 0, // Add the missing `total_runes_tx` field
         runestones: all_runes, // Add the missing `runestones` field
     };

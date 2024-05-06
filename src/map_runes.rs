@@ -34,7 +34,7 @@ use substreams::pb::substreams::store_delta::Operation;
 
 #[substreams::handlers::map]
 fn map_runes(blk: Block) -> Result<RunestoneBufs, Vec<substreams::errors::Error>> {
-    substreams::log::println("MAPPPPP RUNESSSSS");
+    substreams::log::println("MAPPPPP RUNESSSSS".to_string());
 
     let mut rune_data: Rune = Rune::default();
     let mut runes: Vec<RunestoneBuf> = Vec::new();
@@ -116,20 +116,23 @@ fn map_runes(blk: Block) -> Result<RunestoneBufs, Vec<substreams::errors::Error>
         // if let Artifact::Runestone(rune) = Runestone::decipher(&txnss).unwrap_or_default(Runestone) {
         if let rs = Runestone::decipher(&txnss) {
             if let Some(rs) = &rs {
+                substreams::log::println("rs  :::  START".to_string());
                 if let Artifact::Runestone(runestone) = rs {
                     if let Some(etching) = &runestone.etching {
-                        // substreams::log::println("RUNE::ID");
-                        // substreams::log::println(blk.height.to_string());
+                        substreams::log::println("RUNE::ID");
+                        substreams::log::println(
+                            blk.height.to_string() + "" + index.to_string().as_str()
+                        );
 
-                        // substreams::log::println(index.to_string());
-                        // substreams::log::println(trans.txid.to_string());
-                        // substreams::log::println(
-                        //     etching.rune
-                        //         .as_ref()
-                        //         .map(|r| r.to_string())
-                        //         .unwrap_or_default()
-                        //         .to_string()
-                        // );
+                        substreams::log::println(trans.txid.to_string());
+                        substreams::log::println(
+                            etching.rune
+                                .as_ref()
+                                .map(|r| r.to_string())
+                                .unwrap_or_default()
+                                .to_string()
+                        );
+                        substreams::log::println(etching.premine.unwrap_or_default().to_string());
 
                         currentRune.etching = Some(crate::pb::btc::runes_meta::v1::Etching {
                             divisibility: etching.divisibility.map(|d| d as i32),
@@ -185,6 +188,7 @@ fn map_runes(blk: Block) -> Result<RunestoneBufs, Vec<substreams::errors::Error>
                             block: mint.block.to_string(),
                             tx: mint.tx.to_string(),
                         });
+
                         // substreams::log::println("MINT ::: AMT START".to_string());
                         // substreams::log::println(mint.block.to_string());
                         // substreams::log::println(mint.tx.to_string());
@@ -216,7 +220,6 @@ fn map_runes(blk: Block) -> Result<RunestoneBufs, Vec<substreams::errors::Error>
                     //     );
                     // }
                     currentRune.edicts = edicts;
-                    runes.push(currentRune);
                 }
                 if let Artifact::Cenotaph(cenotaph) = rs {
                     substreams::log::println("cenotaph  :::  START".to_string());
@@ -225,18 +228,44 @@ fn map_runes(blk: Block) -> Result<RunestoneBufs, Vec<substreams::errors::Error>
                         substreams::log::println("cenotaph.etching  ::: AMT START".to_string());
 
                         substreams::log::println(&etching.0.to_string());
+                        currentRune.pointer = "0".to_string();
                     }
                     if let Some(flaw) = &cenotaph.flaw {
                         substreams::log::println("cenotaph.flaw  ::: AMT START".to_string());
 
                         substreams::log::println(&flaw.to_string());
+                        currentRune.pointer = "0".to_string();
                     }
                     if let Some(mint) = &cenotaph.mint {
                         substreams::log::println("cenotaph.mint  ::: AMT START".to_string());
 
                         substreams::log::println(&mint.to_string());
+                        currentRune.pointer = "0".to_string();
                     }
                 }
+                substreams::log::println("ETCHING::STOP :: ".to_string() + ":::");
+                substreams::log::println(
+                    currentRune
+                        .clone()
+                        .etching.unwrap_or_default()
+                        .terms.unwrap_or_default()
+                        .cap.unwrap_or_default()
+                        .to_string() +
+                        ":::" +
+                        &currentRune
+                            .clone()
+                            .etching.unwrap_or_default()
+                            .id.unwrap_or_default()
+                            .block.to_string() +
+                        ":::" +
+                        &currentRune
+                            .clone()
+                            .etching.unwrap_or_default()
+                            .id.unwrap_or_default()
+                            .tx.to_string()
+                );
+
+                runes.push(currentRune);
             }
         } else {
             substreams::log::println("FAILED to decode".to_string());
@@ -337,108 +366,8 @@ pub fn map_runes2(
         // if let Artifact::Runestone(rune) = Runestone::decipher(&txnss).unwrap_or_default(Runestone) {
         if let rs = Runestone::decipher(&txnss) {
             if let Some(rs) = &rs {
-                if let Artifact::Runestone(runestone) = rs {
-                    if let Some(etching) = &runestone.etching {
-                        // substreams::log::println("RUNE::ID");
-                        // substreams::log::println(blk.height.to_string());
+                substreams::log::println("rs  :::  START".to_string());
 
-                        // substreams::log::println(index.to_string());
-                        // substreams::log::println(trans.txid.to_string());
-                        // substreams::log::println(
-                        //     etching.rune
-                        //         .as_ref()
-                        //         .map(|r| r.to_string())
-                        //         .unwrap_or_default()
-                        //         .to_string()
-                        // );
-
-                        currentRune.etching = Some(ord_proto::Etching {
-                            divisibility: etching.divisibility.map(|d| d as i32),
-                            rune: etching.rune.as_ref().map(|r| r.to_string()), // Wrap the value in Some
-                            spacers: Some(etching.spacers.unwrap_or_default().to_string()), // Wrap the value in Some
-                            symbol: Some(etching.symbol.unwrap_or_default().to_string()), // Wrap the value in Some
-                            turbo: Some(etching.turbo), // Wrap the value in Some
-                            premine: etching.premine.map(|p| p.to_string()), // Convert Option<u128> to Option<String>
-                            terms: None, // Add the missing field 'terms'
-                            supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms'
-                            id: Some(ord_proto::RuneId {
-                                block: blk.height.to_string(), // Unwrap the Option value
-                                tx: index.to_string(), // Add the missing field 'cap'
-                            }),
-                        });
-                        if let Some(rune) = etching.rune.as_ref().map(|r| r.to_string()) {
-                            // substreams::log::println(rune);``
-                        }
-                        if let Some(terms) = &etching.terms {
-                            currentRune.etching = Some(ord_proto::Etching {
-                                divisibility: etching.divisibility.map(|d| d as i32),
-                                rune: etching.rune.as_ref().map(|r| r.to_string()), // Wrap the value in Some
-                                spacers: Some(etching.spacers.unwrap_or_default().to_string()), // Wrap the value in Some
-                                symbol: Some(etching.symbol.unwrap_or_default().to_string()), // Wrap the value in Some
-                                turbo: Some(etching.turbo), // Wrap the value in Some
-                                premine: etching.premine.map(|p| p.to_string()), // Convert Option<u128> to Option<String>
-                                terms: Some(ord_proto::Terms {
-                                    amount: Some(terms.amount.unwrap_or_default().to_string()),
-                                    cap: Some(terms.cap.unwrap_or_default().to_string()), // Add the missing field 'cap'
-                                }), // Add the missing field 'terms'
-                                supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms',
-                                id: Some(ord_proto::RuneId {
-                                    block: blk.height.to_string(), // Unwrap the Option value
-                                    tx: index.to_string(), // Add the missing field 'cap'
-                                }),
-                            });
-                            // if let Some(cap) = &terms.cap {
-                            //     // substreams::log::println(cap.to_string());
-                            // }
-                        } else {
-                            // substreams::log::println("Symbol is None".to_string());
-                        }
-                    }
-                    if let Some(pointer) = &runestone.pointer {
-                        currentRune.pointer = pointer.to_string();
-                        // substreams::log::println("pointer ::: AMT START".to_string());
-                        // substreams::log::println(pointer.to_string());
-                        // substreams::log::println(trans.txid.to_string());
-                        // substreams::log::println("pointer ::: AMT END".to_string());
-                    }
-                    if let Some(mint) = &runestone.mint {
-                        currentRune.mint = Some(ord_proto::RuneId {
-                            block: mint.block.to_string(),
-                            tx: mint.tx.to_string(),
-                        });
-                        // substreams::log::println("MINT ::: AMT START".to_string());
-                        // substreams::log::println(mint.block.to_string());
-                        // substreams::log::println(mint.tx.to_string());
-                        // substreams::log::println(trans.txid.to_string());
-                        // substreams::log::println("MINT ::: AMT END".to_string());
-                    }
-                    let mut edicts: Vec<ord_proto::Edict> = Vec::new();
-                    for Edict { id, amount, output } in runestone.edicts.iter().copied() {
-                        let newEdict: ord_proto::Edict = ord_proto::Edict {
-                            amount: amount.to_string(),
-                            output: output.to_string(),
-                            id: Some(ord_proto::RuneId {
-                                block: id.block.to_string(),
-                                tx: id.tx.to_string(),
-                            }),
-                        };
-                        edicts.push(newEdict);
-                        // substreams::log::println("EDICTTT ::: AMT START".to_string());
-                        // substreams::log::println(id.to_string());
-                        // substreams::log::println(amount.to_string());
-                        // substreams::log::println(output.to_string());
-                        // substreams::log::println("EDICTTT ::: AMT END".to_string());
-                    }
-                    // if let etching = runestone.etching {
-                    //     // You have the Runestone artifact here, use it as needed
-                    //     // substreams::log::println(runestone.edicts.len().to_string());
-                    //     substreams::log::println(
-                    //         runestone.etching.unwrap().symbol.unwrap().to_string()
-                    //     );
-                    // }
-                    currentRune.edicts = edicts;
-                    runes.push(currentRune);
-                }
                 if let Artifact::Cenotaph(cenotaph) = rs {
                     substreams::log::println("cenotaph  :::  START".to_string());
 
@@ -546,12 +475,10 @@ pub fn txn_to_rune(
                         supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms'
                         id: Some(ord_proto::RuneId {
                             block: blkHeight.to_string(), // Unwrap the Option value
-                            tx: index.to_string(), // Add the missing field 'cap'
+                            tx: (index + 1).to_string(), // excludes the coinbase tx
                         }),
                     });
-                    if let Some(rune) = etching.rune.as_ref().map(|r| r.to_string()) {
-                        // substreams::log::println(rune);``
-                    }
+
                     if let Some(terms) = &etching.terms {
                         currentRune.etching = Some(ord_proto::Etching {
                             divisibility: etching.divisibility.map(|d| d as i32),
@@ -567,7 +494,7 @@ pub fn txn_to_rune(
                             supply: Some(etching.supply().unwrap_or_default().to_string()), // Add the missing field 'terms',
                             id: Some(ord_proto::RuneId {
                                 block: blkHeight.to_string(), // Unwrap the Option value
-                                tx: index.to_string(), // Add the missing field 'cap'
+                                tx: (index + 1).to_string(), // Add the missing field 'cap'
                             }),
                         });
                         // if let Some(cap) = &terms.cap {
