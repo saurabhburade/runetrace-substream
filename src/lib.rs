@@ -74,24 +74,31 @@ fn map_ordinals(block: btc::Block) -> Result<ord_proto::Block, substreams::error
         .enumerate()
         .map(|(idx, tx)| {
             // RUNES DATA
-            let runeRaw = txn_to_rune(tx.clone(), block.height as u64, idx.clone());
-            let currentrune = runeRaw.unwrap_or_default();
-            // let currentrune = Default::default();
-            // // if currentrunel
+            let mut currentrune = Default::default();
 
-            if Some(currentrune.clone()).is_some() {
-                // substreams::log::println("RUNE FOUND".to_string());
-                // if let Some(etching) = &currentrune.etching {
-                //     substreams::log::println(
-                //         etching.rune
-                //             .as_ref()
-                //             .map(|r| r.to_string())
-                //             .unwrap_or_default()
-                //             .to_string()
-                //     );
-                // }
-                all_runes.push(currentrune.clone());
+            if block.height.clone().ge(&(840000 as i64)) {
+                substreams::log::println("INSIDE :: RUNE FOUND".to_string());
+
+                let runeRaw = txn_to_rune(tx.clone(), block.height as u64, idx.clone());
+                currentrune = runeRaw.unwrap_or_default();
+                // let currentrune = Default::default();
+                // // if currentrunel
+
+                if Some(currentrune.clone()).is_some() {
+                    substreams::log::println("RUNE FOUND".to_string());
+                    // if let Some(etching) = &currentrune.etching {
+                    //     substreams::log::println(
+                    //         etching.rune
+                    //             .as_ref()
+                    //             .map(|r| r.to_string())
+                    //             .unwrap_or_default()
+                    //             .to_string()
+                    //     );
+                    // }
+                    all_runes.push(currentrune.clone());
+                }
             }
+
             // substreams::log::println(rune.unwrap_or_default().etching.unwrap_or_default().rune);
             ord_proto::Transaction {
                 txid: tx.txid.clone(),
